@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.duocuc.turismoreal.request.RegistroCliente;
 import com.duocuc.turismoreal.service.ClienteService;
 
-@RestController("cliente")
+@RestController
 public class ClienteController {
     
     @Autowired
     ClienteService clienteService;
 
     @PostMapping("/registrar")
-    public String registrarCliente(@RequestBody(required = true) RegistroCliente registroCliente){
+    public void registrarCliente(@RequestBody(required = true) RegistroCliente registroCliente){
 
-        return clienteService.registrarCliente(registroCliente);
+        clienteService.registrarCliente(registroCliente);
 
     }
 
