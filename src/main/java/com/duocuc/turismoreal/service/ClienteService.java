@@ -1,7 +1,7 @@
 package com.duocuc.turismoreal.service;
 
 import java.sql.Types;
-import java.util.Map;
+//import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
+import com.duocuc.turismoreal.request.ActualizarCliente;
 import com.duocuc.turismoreal.request.RegistroCliente;
 
 /**
@@ -69,6 +70,41 @@ public class ClienteService {
                 SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
                                 .withProcedureName("SP_DELETE_CLIENT")
                                 .declareParameters(new SqlParameter("p_run", Types.VARCHAR));
+
+                jdbcCall.execute(in);
+
+        }
+
+        public void actualizarCliente(String run, ActualizarCliente actualizarCliente){
+
+                SqlParameterSource in = new MapSqlParameterSource()
+                                .addValue("p_run", run, Types.VARCHAR)
+                                .addValue("p_nombre", actualizarCliente.getNombre(), Types.VARCHAR)
+                                .addValue("p_appaterno", actualizarCliente.getAppaterno(), Types.VARCHAR)
+                                .addValue("p_apmaterno", actualizarCliente.getApmaterno(), Types.VARCHAR)
+                                .addValue("p_genero", actualizarCliente.getGenero(), Types.VARCHAR)
+                                .addValue("p_direccion", actualizarCliente.getDireccion(), Types.VARCHAR)
+                                .addValue("p_fecha_nacimiento", actualizarCliente.getFechaNacimiento(), Types.DATE)
+                                .addValue("p_telefono", actualizarCliente.getTelefono(), Types.VARCHAR)
+                                .addValue("p_telefono_2", actualizarCliente.getTelefono_2(), Types.VARCHAR)
+                                .addValue("p_correo", actualizarCliente.getCorreo(), Types.VARCHAR)
+                                .addValue("p_es_frecuente", actualizarCliente.getEsFrecuente(), Types.CHAR)
+                                .addValue("p_id_comuna", actualizarCliente.getIdComuna(), Types.INTEGER);
+                                
+                SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                                .withProcedureName("SP_CREATE_CLIENT")
+                                .declareParameters(new SqlParameter("p_run", Types.VARCHAR),
+                                                new SqlParameter("p_nombre", Types.VARCHAR),
+                                                new SqlParameter("p_appaterno", Types.VARCHAR),
+                                                new SqlParameter("p_apmaterno", Types.VARCHAR),
+                                                new SqlParameter("p_genero", Types.VARCHAR),
+                                                new SqlParameter("p_direccion", Types.VARCHAR),
+                                                new SqlParameter("p_fecha_nacimiento", Types.DATE),
+                                                new SqlParameter("p_telefono", Types.VARCHAR),
+                                                new SqlParameter("p_telefono_2", Types.VARCHAR),
+                                                new SqlParameter("p_correo", Types.VARCHAR),
+                                                new SqlParameter("p_es_frecuente", Types.CHAR),
+                                                new SqlParameter("p_id_comuna", Types.INTEGER));
 
                 jdbcCall.execute(in);
 

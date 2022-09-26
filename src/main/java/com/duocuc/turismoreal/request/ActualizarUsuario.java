@@ -3,11 +3,13 @@ package com.duocuc.turismoreal.request;
 public class ActualizarUsuario {
     
     private String nombreUsuario;
-    private String password;
+    private String oldPassword;
+    private String newPassword;
     
-    public ActualizarUsuario(String nombreUsuario, String password) {
+    public ActualizarUsuario(String nombreUsuario, String oldPassword, String newPassword) {
         this.nombreUsuario = nombreUsuario;
-        this.password = password;
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 
     public String getNombreUsuario() {
@@ -18,12 +20,21 @@ public class ActualizarUsuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getPassword() {
-        return password;
+    public String getOldPassword() {
+        return oldPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+    
+    
 }
