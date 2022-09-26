@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * ServiceException - Clase que contiene los stributos de error que se desea retornar
+ * ServiceException - Clase que contiene los atributos de error que se desea retornar
  */
 public class ServiceException extends RuntimeException {
 

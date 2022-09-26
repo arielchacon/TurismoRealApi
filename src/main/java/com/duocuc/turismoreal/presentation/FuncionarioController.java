@@ -6,21 +6,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.duocuc.turismoreal.request.RegistroCliente;
-import com.duocuc.turismoreal.service.ClienteService;
+import com.duocuc.turismoreal.request.RegistroFuncionario;
+import com.duocuc.turismoreal.service.FuncionarioService;
 
 @RestController
-@RequestMapping("cliente")
-public class ClienteController {
-    
+@RequestMapping("funcionario")
+public class FuncionarioController {
+ 
     @Autowired
-    ClienteService clienteService;
-
+    FuncionarioService funcionarioService;
+    
     @PostMapping("/registrar")
-    public void registrarCliente(@RequestBody(required = true) RegistroCliente registroCliente){
+    public void registrarFuncionario(@RequestBody(required = true) RegistroFuncionario registroFuncionario){
 
-        clienteService.registrarCliente(registroCliente);
+        funcionarioService.registrarFuncionario(registroFuncionario);
 
     }
-
 }

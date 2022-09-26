@@ -1,7 +1,6 @@
 package com.duocuc.turismoreal.service;
 
 import java.sql.Types;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -12,37 +11,37 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
-import com.duocuc.turismoreal.request.RegistroCliente;
+import com.duocuc.turismoreal.request.RegistroFuncionario;
 
 /**
- * ClienteService - Clase con la logica de invocacion a los procedimientos para la mantencion de clientes
+ * FuncionarioService - Clase con la logica de invocacion a los procedimientos para la mantencion de funcionarios
  */
 @Service
-public class ClienteService {
+public class FuncionarioService {
 
         @Autowired
         DataSource dataSource;
 
-        public void registrarCliente(RegistroCliente registroCliente) {
+        public void registrarFuncionario(RegistroFuncionario registroFuncionario) {
 
                 SqlParameterSource in = new MapSqlParameterSource()
-                                .addValue("p_run", registroCliente.getRun(), Types.VARCHAR)
-                                .addValue("p_nombre", registroCliente.getNombre(), Types.VARCHAR)
-                                .addValue("p_appaterno", registroCliente.getAppaterno(), Types.VARCHAR)
-                                .addValue("p_apmaterno", registroCliente.getApmaterno(), Types.VARCHAR)
-                                .addValue("p_genero", registroCliente.getGenero(), Types.VARCHAR)
-                                .addValue("p_direccion", registroCliente.getDireccion(), Types.VARCHAR)
-                                .addValue("p_fecha_nacimiento", registroCliente.getFechaNacimiento(), Types.DATE)
-                                .addValue("p_telefono", registroCliente.getTelefono(), Types.VARCHAR)
-                                .addValue("p_telefono_2", registroCliente.getTelefono_2(), Types.VARCHAR)
-                                .addValue("p_correo", registroCliente.getCorreo(), Types.VARCHAR)
-                                .addValue("p_es_frecuente", registroCliente.getEsFrecuente(), Types.CHAR)
-                                .addValue("p_id_comuna", registroCliente.getIdComuna(), Types.INTEGER)
-                                .addValue("p_nombre_usuario", registroCliente.getNombreUsuario(), Types.VARCHAR)
-                                .addValue("p_password", registroCliente.getPassword(), Types.VARCHAR);
+                                .addValue("p_run", registroFuncionario.getRun(), Types.VARCHAR)
+                                .addValue("p_nombre", registroFuncionario.getNombre(), Types.VARCHAR)
+                                .addValue("p_appaterno", registroFuncionario.getAppaterno(), Types.VARCHAR)
+                                .addValue("p_apmaterno", registroFuncionario.getApmaterno(), Types.VARCHAR)
+                                .addValue("p_genero", registroFuncionario.getGenero(), Types.VARCHAR)
+                                .addValue("p_direccion", registroFuncionario.getDireccion(), Types.VARCHAR)
+                                .addValue("p_fecha_nacimiento", registroFuncionario.getFechaNacimiento(), Types.DATE)
+                                .addValue("p_telefono", registroFuncionario.getTelefono(), Types.VARCHAR)
+                                .addValue("p_correo", registroFuncionario.getCorreo(), Types.VARCHAR)
+                                .addValue("p_cargo", registroFuncionario.getCargo(), Types.VARCHAR)
+                                .addValue("p_estado", registroFuncionario.getCargo(), Types.VARCHAR)
+                                .addValue("p_id_comuna", registroFuncionario.getIdComuna(), Types.INTEGER)
+                                .addValue("p_nombre_usuario", registroFuncionario.getNombreUsuario(), Types.VARCHAR)
+                                .addValue("p_password", registroFuncionario.getPassword(), Types.VARCHAR);
 
                 SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
-                                .withProcedureName("SP_CREATE_CLIENT")
+                                .withProcedureName("SP_CREATE_EMPLOYEE")
                                 .declareParameters(new SqlParameter("p_run", Types.VARCHAR),
                                                 new SqlParameter("p_nombre", Types.VARCHAR),
                                                 new SqlParameter("p_appaterno", Types.VARCHAR),
@@ -51,9 +50,9 @@ public class ClienteService {
                                                 new SqlParameter("p_direccion", Types.VARCHAR),
                                                 new SqlParameter("p_fecha_nacimiento", Types.DATE),
                                                 new SqlParameter("p_telefono", Types.VARCHAR),
-                                                new SqlParameter("p_telefono_2", Types.VARCHAR),
                                                 new SqlParameter("p_correo", Types.VARCHAR),
-                                                new SqlParameter("p_es_frecuente", Types.CHAR),
+                                                new SqlParameter("p_cargo", Types.VARCHAR),
+                                                new SqlParameter("p_estado", Types.VARCHAR),
                                                 new SqlParameter("p_id_comuna", Types.INTEGER),
                                                 new SqlParameter("p_nombre_usuario", Types.VARCHAR),
                                                 new SqlParameter("p_password", Types.VARCHAR));
@@ -61,13 +60,13 @@ public class ClienteService {
                 jdbcCall.execute(in);
         }
 
-        public void borrarCliente(String run) {
+        public void borrarFuncionario(String run) {
 
                 SqlParameterSource in = new MapSqlParameterSource()
                                 .addValue("p_run", run, Types.VARCHAR);
 
                 SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
-                                .withProcedureName("SP_DELETE_CLIENT")
+                                .withProcedureName("SP_DELETE_EMPLOYEE")
                                 .declareParameters(new SqlParameter("p_run", Types.VARCHAR));
 
                 jdbcCall.execute(in);
