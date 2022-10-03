@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -44,14 +45,22 @@ public class UsuarioService {
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_nombre_usuario", nombreUsuario, Types.VARCHAR)
-                .addValue("p_password", password, Types.VARCHAR);
+                .addValue("p_password", password, Types.VARCHAR)
+                .addValue("p_out_id_usuario", Types.INTEGER)
+                .addValue("p_out_nombre_usuario", Types.VARCHAR)
+                .addValue("p_out_estado", Types.VARCHAR);
 
-                SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
                 .withProcedureName("SP_VALIDA_USUARIO_PASS")
                 .declareParameters(new SqlParameter("p_nombre_usuario", Types.VARCHAR),
-                        new SqlParameter("p_password", Types.VARCHAR));
+                                   new SqlParameter("p_password", Types.VARCHAR),
+                                   new SqlOutParameter("p_out_id_usuario", Types.INTEGER),
+                                   new SqlOutParameter("p_out_nombre_usuario", Types.VARCHAR),
+                                   new SqlOutParameter("p_out_estado", Types.VARCHAR));
                         
         Map<String, Object> out = jdbcCall.execute(in);
+
+        System.out.println(out.toString());
 
         if(!out.isEmpty()){
 
