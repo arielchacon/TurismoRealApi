@@ -48,7 +48,8 @@ public class UsuarioService {
                 .addValue("p_password", password, Types.VARCHAR)
                 .addValue("p_out_id_usuario", Types.INTEGER)
                 .addValue("p_out_nombre_usuario", Types.VARCHAR)
-                .addValue("p_out_estado", Types.VARCHAR);
+                .addValue("p_out_estado", Types.VARCHAR)
+                .addValue("p_out_rol", Types.VARCHAR);
 
                 SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
                 .withProcedureName("SP_VALIDA_USUARIO_PASS")
@@ -56,7 +57,8 @@ public class UsuarioService {
                                    new SqlParameter("p_password", Types.VARCHAR),
                                    new SqlOutParameter("p_out_id_usuario", Types.INTEGER),
                                    new SqlOutParameter("p_out_nombre_usuario", Types.VARCHAR),
-                                   new SqlOutParameter("p_out_estado", Types.VARCHAR));
+                                   new SqlOutParameter("p_out_estado", Types.VARCHAR),
+                                   new SqlOutParameter("p_out_rol", Types.VARCHAR));
                         
         Map<String, Object> out = jdbcCall.execute(in);
 
@@ -65,8 +67,9 @@ public class UsuarioService {
         if(!out.isEmpty()){
 
             usuario.setIdUsuario((Integer) out.get("p_out_id_usuario"));
-            usuario.setNombreUsuario((String) out.get("p_out_nombre_usuario") );
+            usuario.setNombreUsuario((String) out.get("p_out_nombre_usuario"));
             usuario.setEstado((String) out.get("p_out_estado"));
+            usuario.setRol((String) out.get("p_out_rol"));
 
         }
 
