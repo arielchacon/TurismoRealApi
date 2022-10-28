@@ -20,13 +20,7 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @PostMapping("/registrar")
-    public void registrarCliente(@RequestBody(required = true) RegistroCliente registroCliente) {
-
-        clienteService.registrarCliente(registroCliente);
-
-    }
-
+    
     @PutMapping("/actualizar/{runCliente}")
     public void actualizarCliente(@PathVariable(required = true) String runCliente,
             @RequestBody(required = true) ActualizarCliente actualizarCliente) {

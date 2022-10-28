@@ -1,7 +1,6 @@
 package com.duocuc.turismoreal.service;
 
 import java.sql.Types;
-//import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -24,9 +23,12 @@ public class ClienteService {
         @Autowired
         DataSource dataSource;
 
-        public void registrarCliente(RegistroCliente registroCliente) {
+        public String registrarCliente(RegistroCliente registroCliente) {
 
-                SqlParameterSource in = new MapSqlParameterSource()
+                String message;
+
+                try {
+                        SqlParameterSource in = new MapSqlParameterSource()
                                 .addValue("p_run", registroCliente.getRun(), Types.VARCHAR)
                                 .addValue("p_nombre", registroCliente.getNombre(), Types.VARCHAR)
                                 .addValue("p_appaterno", registroCliente.getAppaterno(), Types.VARCHAR)
@@ -60,6 +62,18 @@ public class ClienteService {
                                                 new SqlParameter("p_password", Types.VARCHAR));
 
                 jdbcCall.execute(in);
+
+                message = "Ok";
+
+                return message;
+
+                } catch (Exception e) {
+                        
+                message = e.getMessage();
+
+                return message;
+
+                }
         }
 
         public void borrarCliente(String run) {
