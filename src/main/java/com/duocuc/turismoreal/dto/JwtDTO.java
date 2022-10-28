@@ -6,26 +6,46 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class JwtDTO {
 
-    private String accessToken;
-    private String tokenType = "Bearer";
+    private String token;
+    private String bearer = "Bearer";
+    private String nombreUsuario;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtDTO(String accessToken) {
-        this.accessToken = accessToken;
-    }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
+    public JwtDTO(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
+        this.token = token;
+        this.nombreUsuario = nombreUsuario;
+        this.authorities = authorities;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getToken() {
+        return token;
     }
 
-    public String getTokenType() {
-        return tokenType;
+    public void setToken(String token) {
+        this.token = token;
     }
-    
+
+    public String getBearer() {
+        return bearer;
+    }
+
+    public void setBearer(String bearer) {
+        this.bearer = bearer;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 }

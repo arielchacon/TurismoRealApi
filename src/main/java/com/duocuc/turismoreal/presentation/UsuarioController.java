@@ -86,8 +86,10 @@ public class UsuarioController {
 
         String token = jwtProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JwtDTO(token));
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        JwtDTO jwtDTO = new JwtDTO(token, userDetails.getUsername(), userDetails.getAuthorities());
+        return new ResponseEntity<JwtDTO>(jwtDTO, HttpStatus.OK);
     }
 
 }
