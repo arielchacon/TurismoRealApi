@@ -25,13 +25,15 @@ public class EdificioService {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_direccion", registroEdificio.getDireccion(), Types.VARCHAR)
                 .addValue("p_estado", registroEdificio.getEstado(), Types.VARCHAR)
-                .addValue("p_id_comuna", registroEdificio.getId_comuna(), Types.INTEGER);
+                .addValue("p_id_comuna", registroEdificio.getId_comuna(), Types.INTEGER)
+                .addValue("p_nombre", registroEdificio.getNombre(), Types.VARCHAR);
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
                 .withProcedureName("SP_CREATE_BUILDING")
                 .declareParameters(new SqlParameter("p_direccion", Types.VARCHAR),
                         new SqlParameter("p_estado", Types.VARCHAR),
-                        new SqlParameter("p_id_comuna", Types.INTEGER));
+                        new SqlParameter("p_id_comuna", Types.INTEGER),
+                        new SqlParameter("p_nombre", Types.VARCHAR));
 
         jdbcCall.execute(in);
 
@@ -43,14 +45,16 @@ public class EdificioService {
                 .addValue("p_id_edificio", idEdificio, Types.INTEGER)
                 .addValue("p_direccion", actualizarEdificio.getDireccion(), Types.VARCHAR)
                 .addValue("p_estado", actualizarEdificio.getEstado(), Types.VARCHAR)
-                .addValue("p_id_comuna", actualizarEdificio.getId_comuna(), Types.INTEGER);
+                .addValue("p_id_comuna", actualizarEdificio.getId_comuna(), Types.INTEGER)
+                .addValue("p_nombre", actualizarEdificio.getNombre(), Types.VARCHAR);
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
                 .withProcedureName("SP_UPDATE_BUILDING")
                 .declareParameters(new SqlParameter("p_id_edificio", Types.INTEGER),
                         new SqlParameter("p_direccion", Types.VARCHAR),
                         new SqlParameter("p_estado", Types.VARCHAR),
-                        new SqlParameter("p_id_comuna", Types.INTEGER));
+                        new SqlParameter("p_id_comuna", Types.INTEGER),
+                        new SqlParameter("p_nombre", Types.VARCHAR));
 
         jdbcCall.execute(in);
 
@@ -68,5 +72,7 @@ public class EdificioService {
         jdbcCall.execute(in);
 
     }
+
+    
 
 }

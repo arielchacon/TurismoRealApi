@@ -42,46 +42,6 @@ public class UsuarioService {
 
     }
 
-    public UsuarioResponse iniciarSesion(String nombreUsuario, String password){
-
-        UsuarioResponse usuario = new UsuarioResponse();
-
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_nombre_usuario", nombreUsuario, Types.VARCHAR)
-                .addValue("p_password", password, Types.VARCHAR)
-                .addValue("p_out_id_usuario", Types.INTEGER)
-                .addValue("p_out_nombre_usuario", Types.VARCHAR)
-                .addValue("p_out_password", Types.VARCHAR)
-                .addValue("p_out_estado", Types.VARCHAR)
-                .addValue("p_out_rol", Types.VARCHAR);
-
-                SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
-                .withProcedureName("SP_VALIDA_USUARIO_PASS")
-                .declareParameters(new SqlParameter("p_nombre_usuario", Types.VARCHAR),
-                                   new SqlParameter("p_password", Types.VARCHAR),
-                                   new SqlOutParameter("p_out_id_usuario", Types.INTEGER),
-                                   new SqlOutParameter("p_out_nombre_usuario", Types.VARCHAR),
-                                   new SqlOutParameter("p_out_password", Types.VARCHAR),
-                                   new SqlOutParameter("p_out_estado", Types.VARCHAR),
-                                   new SqlOutParameter("p_out_rol", Types.VARCHAR));
-                        
-        Map<String, Object> out = jdbcCall.execute(in);
-
-        System.out.println(out.toString());
-
-        if(!out.isEmpty()){
-
-            usuario.setIdUsuario((Integer) out.get("p_out_id_usuario"));
-            usuario.setNombreUsuario((String) out.get("p_out_nombre_usuario"));
-            usuario.setNombreUsuario((String) out.get("p_out_password"));
-            usuario.setEstado((String) out.get("p_out_estado"));
-
-        }
-
-        return usuario;
-
-    }
-
     public UsuarioResponse getByNombre(String nombreUsuario){
 
         UsuarioResponse usuario = new UsuarioResponse();
