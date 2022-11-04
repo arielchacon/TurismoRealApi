@@ -43,6 +43,8 @@ public class DireccionService {
 
             }
 
+            rs.close();
+
         } catch (SQLException e) {
             
             e.printStackTrace();
@@ -72,6 +74,8 @@ public class DireccionService {
                 provincias.add(provincia);
 
             }
+
+            rs.close();
 
         } catch (Exception e) {
             
@@ -103,6 +107,8 @@ public class DireccionService {
 
                 comunas.add(comuna);
             }
+
+            rs.close();
             
         } catch (Exception e) {
             

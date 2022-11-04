@@ -2,24 +2,53 @@ package com.duocuc.turismoreal.request;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * RegistroCliente - Clase con la estructura necesaria para el request de registro
  */
 public class RegistroCliente {
 
+    @JsonProperty("run")
     private String run;
+
+    @JsonProperty("nombre")
     private String nombre;
+
+    @JsonProperty("apPaterno")
     private String appaterno;
+
+    @JsonProperty("apMaterno")
     private String apmaterno;
+    
+    @JsonProperty("genero")
     private String genero;
+
+    @JsonProperty("direccion")
     private String direccion;
+
+    @JsonProperty("fechaNacimiento")
     private Date fechaNacimiento;
+
+    @JsonProperty("telefono")
     private String telefono;
+
+    @JsonProperty("telefono2")
     private String telefono_2;
+
+    @JsonProperty("correo")
     private String correo;
+
+    @JsonProperty("esFrecuente")
     private Boolean esFrecuente;
+
+    @JsonProperty("idComuna")
     private int idComuna;
+
+    @JsonProperty("nombreUsuario")
     private String nombreUsuario;
+
+    @JsonProperty("password")
     private String password;
 
     public RegistroCliente(String run, String nombre, String appaterno, String apmaterno, String genero,
@@ -41,6 +70,9 @@ public class RegistroCliente {
         this.nombreUsuario = nombreUsuario;
         this.password = password;
     }
+
+    public RegistroCliente(){}
+    
 
     public String getRun() {
         return run;

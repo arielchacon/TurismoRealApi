@@ -1,6 +1,10 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.request.ActualizarDepartamento;
 import com.duocuc.turismoreal.request.RegistroDepartamento;
+import com.duocuc.turismoreal.response.DepartamentoResponse;
 
 @Service
 public class DepartamentoService {
@@ -93,6 +98,52 @@ public class DepartamentoService {
                 .declareParameters(new SqlParameter("p_id_departamento", Types.INTEGER));
 
         jdbcCall.execute(in);
+
+    }
+
+    public List<DepartamentoResponse> listarDepartamentos(int idEdificio){
+
+        List<DepartamentoResponse> departamentos = new ArrayList<>();
+
+        try {
+
+                String query = "SELECT ID_DEPARTAMENTO, NUM_DEPTO, NUM_HABITACIONES, NUM_BANIOS, ESTADO, VALOR, IMAGEN, DIVIDENDO,"
+                               + "CONTRIBUCION, DISPONIBILIDAD, ID_EDIFICIO, FUNCIONARIOS_RUN FROM DEPARTAMENTOS WHERE ID_EDIFICIO = ?";
+
+                PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+                stm.setInt(1, idEdificio);
+
+                ResultSet rs = stm.executeQuery();
+
+                while(rs.next()){
+
+                        DepartamentoResponse departamento = new DepartamentoResponse();
+
+                        departamento.setIdDepartamento(rs.getInt("ID_DEPARTAMENTO"));
+                        departamento.setNumDepartamento(rs.getInt("NUM_DEPTO"));
+                        departamento.setNumHabitaciones(rs.getInt("NUM_HABITACIONES"));
+                        departamento.setNumBanios(rs.getInt("NUM_BANIOS"));
+                        departamento.setEstado(rs.getString("ESTADO"));
+                        departamento.setValor(rs.getInt("VALOR"));
+                        departamento.setImagen(rs.getBlob("IMAGEN"));
+                        departamento.setDividendo(rs.getInt("DIVIDENDO"));
+                        departamento.setContribucion(rs.getInt("CONTRIBUCION"));
+                        departamento.setDisponibilidad(rs.getString("DISPONIBILIDAD"));
+                        departamento.setIdEdificio(rs.getInt("ID_EDIFICIO"));
+                        departamento.setRunFuncionario(rs.getString("FUNCIONARIOS_RUN"));
+
+                        departamentos.add(departamento);
+
+                }
+
+                
+        } catch (Exception e) {
+                
+                e.printStackTrace();
+        }
+
+        return departamentos;
 
     }
 

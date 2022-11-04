@@ -10,10 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duocuc.turismoreal.dto.JwtDTO;
@@ -27,6 +29,7 @@ import com.duocuc.turismoreal.service.UsuarioService;
 
 @RestController
 @RequestMapping("usuario")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST} )
 public class UsuarioController {
 
     @Autowired
@@ -63,7 +66,7 @@ public class UsuarioController {
 
         clienteService.registrarCliente(registroCliente);
 
-       return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+       return new ResponseEntity(new Mensaje("ok"), HttpStatus.CREATED);
 
     }
 
