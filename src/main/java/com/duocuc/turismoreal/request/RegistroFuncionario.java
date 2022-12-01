@@ -16,12 +16,13 @@ public class RegistroFuncionario {
     private String cargo;
     private String estado;
     private int idComuna;
+    private int idRol;
     private String nombreUsuario;
     private String password;
     
     public RegistroFuncionario(String run, String nombre, String appaterno, String apmaterno, String genero,
             String direccion, Date fechaNacimiento, String telefono, String correo, String cargo, String estado,
-            int idComuna, String nombreUsuario, String password) {
+            int idRol, int idComuna, String nombreUsuario, String password) {
         this.run = run;
         this.nombre = nombre;
         this.appaterno = appaterno;
@@ -34,6 +35,7 @@ public class RegistroFuncionario {
         this.cargo = cargo;
         this.estado = estado;
         this.idComuna = idComuna;
+        this.idRol = idRol;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
     }
@@ -148,6 +150,14 @@ public class RegistroFuncionario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
 }

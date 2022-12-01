@@ -38,6 +38,7 @@ public class FuncionarioService {
                                 .addValue("p_cargo", registroFuncionario.getCargo(), Types.VARCHAR)
                                 .addValue("p_estado", registroFuncionario.getEstado(), Types.VARCHAR)
                                 .addValue("p_id_comuna", registroFuncionario.getIdComuna(), Types.INTEGER)
+                                .addValue("p_id_rol", registroFuncionario.getIdRol(), Types.INTEGER)
                                 .addValue("p_nombre_usuario", registroFuncionario.getNombreUsuario(), Types.VARCHAR)
                                 .addValue("p_password", registroFuncionario.getPassword(), Types.VARCHAR);
 

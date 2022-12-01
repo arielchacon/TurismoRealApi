@@ -4,13 +4,13 @@ public class RegistroEdificio {
 
     private String direccion;
     private String estado;
-    private int id_comuna;
+    private int idComuna;
     private String nombre;
     
-    public RegistroEdificio(String direccion, String estado, int id_comuna, String nombre) {
+    public RegistroEdificio(String direccion, String estado, int idComuna, String nombre) {
         this.direccion = direccion;
         this.estado = estado;
-        this.id_comuna = id_comuna;
+        this.idComuna = idComuna;
         this.nombre = nombre;
     }
 
@@ -31,11 +31,11 @@ public class RegistroEdificio {
     }
 
     public int getId_comuna() {
-        return id_comuna;
+        return idComuna;
     }
 
     public void setId_comuna(int id_comuna) {
-        this.id_comuna = id_comuna;
+        this.idComuna = id_comuna;
     }
 
     public String getNombre() {
