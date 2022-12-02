@@ -14,6 +14,8 @@ public class RegistroEdificio {
         this.nombre = nombre;
     }
 
+    public RegistroEdificio(){}
+
     public String getDireccion() {
         return direccion;
     }

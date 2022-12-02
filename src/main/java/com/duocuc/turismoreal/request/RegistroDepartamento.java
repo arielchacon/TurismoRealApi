@@ -31,6 +31,8 @@ public class RegistroDepartamento {
         this.runFuncionario = runFuncionario;
     }
 
+    public RegistroDepartamento(){}
+
     public int getNumDepto() {
         return numDepto;
     }

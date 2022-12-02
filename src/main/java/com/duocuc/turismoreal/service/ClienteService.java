@@ -23,12 +23,10 @@ public class ClienteService {
         @Autowired
         DataSource dataSource;
 
-        public String registrarCliente(RegistroCliente registroCliente) {
+        public void registrarCliente(RegistroCliente registroCliente) {
 
-                String message;
-
-                try {
-                        SqlParameterSource in = new MapSqlParameterSource()
+               
+                SqlParameterSource in = new MapSqlParameterSource()
                                 .addValue("p_run", registroCliente.getRun(), Types.VARCHAR)
                                 .addValue("p_nombre", registroCliente.getNombre(), Types.VARCHAR)
                                 .addValue("p_appaterno", registroCliente.getAppaterno(), Types.VARCHAR)
@@ -63,17 +61,6 @@ public class ClienteService {
 
                 jdbcCall.execute(in);
 
-                message = "Ok";
-
-                return message;
-
-                } catch (Exception e) {
-                        
-                message = e.getMessage();
-
-                return message;
-
-                }
         }
 
         public void borrarCliente(String run) {

@@ -1,6 +1,10 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -12,6 +16,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.request.RegistroServicio;
+import com.duocuc.turismoreal.response.ServicioResponse;
 
 @Service
 public class ServiciosService {
@@ -19,11 +24,7 @@ public class ServiciosService {
     @Autowired
     DataSource dataSource;
 
-    public String agregarServicio(RegistroServicio registroServicio){
-
-        String message;
-
-        try {
+    public void agregarServicio(RegistroServicio registroServicio){
 
         SqlParameterSource in = new MapSqlParameterSource()
                  .addValue("p_descripcion", registroServicio.getDescripcion(), Types.VARCHAR)
@@ -38,17 +39,52 @@ public class ServiciosService {
 
         jdbcCall.execute(in);
 
-        message = "Ok";
+    }
 
-        return message;
+    public void borrarServicio(int idServicio){
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                 .addValue("p_id_servicio", idServicio, Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                 .withProcedureName("SP_DELETE_SERVICE")
+                 .declareParameters(new SqlParameter("p_id_servicio", Types.VARCHAR));
+
+        jdbcCall.execute(in);
+
+    }
+
+    public List<ServicioResponse> listarServicios(){
+
+        List<ServicioResponse> servicios = new ArrayList<>();
+
+        try {
             
-        } catch (Exception e) {
-           
-            message = e.getMessage();
+            String query = "SELECT ID_SERVICIO, DESCRIPCION, ESTADO, MONTO FROM SERVICIOS";
 
-            return message;
+            PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+            ResultSet rs = stm.executeQuery();
+
+            while(rs.next()){
+
+                ServicioResponse servicio = new ServicioResponse(rs.getInt("ID_SERVICIO"), 
+                                                                 rs.getString("DESCRIPCION"),
+                                                                 rs.getString("ESTADO"),
+                                                                 rs.getInt("MONTO"));
+
+                servicios.add(servicio);
+
+            }
+
+            rs.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
 
         }
+
+        return servicios;
 
     }
 

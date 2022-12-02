@@ -40,6 +40,8 @@ public class RegistroFuncionario {
         this.password = password;
     }
 
+    public RegistroFuncionario() {}
+
     public String getRun() {
         return run;
     }

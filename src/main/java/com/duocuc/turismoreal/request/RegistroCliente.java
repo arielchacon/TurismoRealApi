@@ -15,10 +15,10 @@ public class RegistroCliente {
     @JsonProperty("nombre")
     private String nombre;
 
-    @JsonProperty("apPaterno")
+    @JsonProperty("appaterno")
     private String appaterno;
 
-    @JsonProperty("apMaterno")
+    @JsonProperty("appaterno")
     private String apmaterno;
     
     @JsonProperty("genero")

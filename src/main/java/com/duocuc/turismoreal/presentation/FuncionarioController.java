@@ -44,10 +44,12 @@ public class FuncionarioController {
     }
 
     @PutMapping("/actualizar/{runFuncionario}")
-    public void actualizarFuncionario(@PathVariable(required = true) String runFuncionario,
+    public ResponseEntity<?> actualizarFuncionario(@PathVariable(required = true) String runFuncionario,
             @RequestBody(required = true) ActualizarFuncionario actualizarFuncionario) {
 
         funcionarioService.actualizarFuncionario(runFuncionario, actualizarFuncionario);
+
+        return new ResponseEntity(new Mensaje("ok"), HttpStatus.OK);
 
     }
 

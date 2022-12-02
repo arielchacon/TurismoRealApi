@@ -56,6 +56,7 @@ public class FuncionarioService {
                                                 new SqlParameter("p_cargo", Types.VARCHAR),
                                                 new SqlParameter("p_estado", Types.VARCHAR),
                                                 new SqlParameter("p_id_comuna", Types.INTEGER),
+                                                new SqlParameter("p_id_rol",Types.INTEGER),
                                                 new SqlParameter("p_nombre_usuario", Types.VARCHAR),
                                                 new SqlParameter("p_password", Types.VARCHAR));
 

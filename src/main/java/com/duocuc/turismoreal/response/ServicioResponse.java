@@ -1,18 +1,28 @@
-package com.duocuc.turismoreal.request;
+package com.duocuc.turismoreal.response;
 
-public class RegistroServicio {
+public class ServicioResponse {
     
+    private int idServicio;
     private String descripcion;
     private String estado;
     private int monto;
     
-    public RegistroServicio(String descripcion, String estado, int monto) {
+    public ServicioResponse(int idServicio, String descripcion, String estado, int monto) {
+        this.idServicio = idServicio;
         this.descripcion = descripcion;
         this.estado = estado;
         this.monto = monto;
     }
 
-    public RegistroServicio() {}
+    public ServicioResponse(){}
+
+    public int getIdServicio() {
+        return idServicio;
+    }
+
+    public void setIdServicio(int idServicio) {
+        this.idServicio = idServicio;
+    }
 
     public String getDescripcion() {
         return descripcion;
