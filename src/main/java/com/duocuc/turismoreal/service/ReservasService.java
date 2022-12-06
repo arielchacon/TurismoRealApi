@@ -1,5 +1,7 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.Blob;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -18,10 +20,16 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.dto.ReservaDTO;
+import com.duocuc.turismoreal.request.ActualizarCheckIn;
+import com.duocuc.turismoreal.request.ActualizarCheckOut;
 import com.duocuc.turismoreal.request.ActualizarReserva;
 import com.duocuc.turismoreal.request.RegistrarReserva;
 import com.duocuc.turismoreal.request.RegistrarReservaServicio;
+import com.duocuc.turismoreal.response.CheckInResponse;
+import com.duocuc.turismoreal.response.CheckOutResponse;
+import com.duocuc.turismoreal.response.ReservaDepartamentoResponse;
 import com.duocuc.turismoreal.response.ReservaResponse;
+import com.duocuc.turismoreal.response.ReservaServicioResponse;
 
 @Service
 public class ReservasService {
@@ -203,4 +211,276 @@ public class ReservasService {
         jdbcCall.execute(in);
 
     }
+
+    public ReservaResponse buscarReservaPorId(int idReserva) {
+
+        ReservaResponse reserva = new ReservaResponse();
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", idReserva, Types.INTEGER)
+                .addValue("p_out_id_reserva", Types.INTEGER)
+                .addValue("p_out_cant_depto", Types.INTEGER)
+                .addValue("p_out_fecha_reserva", Types.DATE)
+                .addValue("p_out_monto", Types.INTEGER)
+                .addValue("p_out_estado", Types.VARCHAR)
+                .addValue("p_out_run_cliente", Types.VARCHAR);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_SEARCH_BOOKING_BY_ID")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_reserva", Types.INTEGER),
+                        new SqlOutParameter("p_out_cant_depto", Types.INTEGER),
+                        new SqlOutParameter("p_out_fecha_reserva", Types.DATE),
+                        new SqlOutParameter("p_out_monto", Types.INTEGER),
+                        new SqlOutParameter("p_out_estado", Types.VARCHAR),
+                        new SqlOutParameter("p_out_run_cliente", Types.VARCHAR));
+
+        Map<String, Object> out = jdbcCall.execute(in);
+
+        if (!out.isEmpty()) {
+
+            reserva.setIdReserva((Integer) out.get("p_in_id_reserva"));
+            reserva.setCantDepartamento((Integer) out.get("p_out_cant_depto"));
+            reserva.setFechaReserva((Date) out.get("p_out_fecha_reserva"));
+            reserva.setMonto((Integer) out.get("p_out_monto"));
+            reserva.setEstado((String) out.get("p_out_estado"));
+            reserva.setRunCliente((String) out.get("p_out_run_cliente"));
+
+        }
+
+        return reserva;
+
+    }
+
+    public ReservaDepartamentoResponse buscarReservaDepartamento(int idReserva, int idDepartamento) {
+
+        ReservaDepartamentoResponse reservaDepartamento = new ReservaDepartamentoResponse();
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", idReserva, Types.INTEGER)
+                .addValue("p_in_id_departamento", idDepartamento, Types.INTEGER)
+                .addValue("p_out_id_departamento", Types.INTEGER)
+                .addValue("p_out_num_depto", Types.INTEGER)
+                .addValue("p_out_habitaciones", Types.INTEGER)
+                .addValue("p_out_banios", Types.INTEGER)
+                .addValue("p_out_estado", Types.VARCHAR)
+                .addValue("p_out_valor", Types.INTEGER)
+                .addValue("p_out_imagen", Types.BLOB)
+                .addValue("p_out_dividendo", Types.INTEGER)
+                .addValue("p_out_contribucion", Types.INTEGER)
+                .addValue("p_out_disponibilidad", Types.VARCHAR)
+                .addValue("p_out_id_edificio", Types.INTEGER)
+                .addValue("p_out_funcionario", Types.VARCHAR)
+                .addValue("p_out_id_reserva", Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_SEARCH_BOOKING_DEPARTMENT")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlParameter("p_in_id_departamento", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_departamento", Types.INTEGER),
+                        new SqlOutParameter("p_out_num_depto", Types.INTEGER),
+                        new SqlOutParameter("p_out_habitaciones", Types.INTEGER),
+                        new SqlOutParameter("p_out_banios", Types.INTEGER),
+                        new SqlOutParameter("p_out_estado", Types.VARCHAR),
+                        new SqlOutParameter("p_out_valor", Types.INTEGER),
+                        new SqlOutParameter("p_out_imagen", Types.BLOB),
+                        new SqlOutParameter("p_out_dividendo", Types.INTEGER),
+                        new SqlOutParameter("p_out_contribucion", Types.INTEGER),
+                        new SqlOutParameter("p_out_disponibilidad", Types.VARCHAR),
+                        new SqlOutParameter("p_out_id_edificio", Types.INTEGER),
+                        new SqlOutParameter("p_out_funcionario", Types.VARCHAR),
+                        new SqlOutParameter("p_out_id_resreva", Types.INTEGER));
+
+        Map<String, Object> out = jdbcCall.execute(in);
+
+        if (!out.isEmpty()) {
+
+            reservaDepartamento.setIdDepartamento((Integer) out.get("p_out_id_departamento"));
+            reservaDepartamento.setNumeroDepartamento((Integer) out.get("p_out_num_depto"));
+            reservaDepartamento.setNumeroHabitaciones((Integer) out.get("p_out_habitaciones"));
+            reservaDepartamento.setNumeroBanios((Integer) out.get("p_out_banios"));
+            reservaDepartamento.setEstado((String) out.get("p_out_estado"));
+            reservaDepartamento.setValor((Integer) out.get("p_out_valor"));
+            reservaDepartamento.setImagen((Blob) out.get("p_out_imagen"));
+            reservaDepartamento.setDividendo((Integer) out.get("p_out_dividendo"));
+            reservaDepartamento.setContribucion((Integer) out.get("p_out_contribucion"));
+            reservaDepartamento.setDisponibilidad((String) out.get("p_out_disponibilidad"));
+            reservaDepartamento.setIdEdificio((Integer) out.get("p_out_id_edificio"));
+            reservaDepartamento.setRunFuncinoario((String) out.get("p_out_funcionario"));
+            reservaDepartamento.setIdReserva((Integer) out.get("p_out_id_reserva"));
+
+        }
+
+        return reservaDepartamento;
+
+    }
+
+    public ReservaServicioResponse buscarReservaServicio(int idReserva, int idServicio) {
+
+        ReservaServicioResponse reservaServicio = new ReservaServicioResponse();
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", idReserva, Types.INTEGER)
+                .addValue("p_in_id_servicio", idServicio, Types.INTEGER)
+                .addValue("p_out_id_servicio", Types.INTEGER)
+                .addValue("p_out_descripcion", Types.VARCHAR)
+                .addValue("p_out_estado", Types.VARCHAR)
+                .addValue("p_out_monto", Types.INTEGER)
+                .addValue("p_out_id_reserva", Types.INTEGER)
+                .addValue("p_out_fecha_inicio", Types.DATE)
+                .addValue("p_out_hora_inicio", Types.VARCHAR)
+                .addValue("p_out_fecha_termino", Types.DATE)
+                .addValue("p_out_hora_termino", Types.VARCHAR);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_SEARCH_BOOKING_SERVICE")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlParameter("p_in_id_servicio", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_servicio", Types.INTEGER),
+                        new SqlOutParameter("p_out_descripcion", Types.VARCHAR),
+                        new SqlOutParameter("p_out_estado", Types.VARCHAR),
+                        new SqlOutParameter("p_out_monto", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_reserva", Types.INTEGER),
+                        new SqlOutParameter("p_out_fecha_inicio", Types.DATE),
+                        new SqlOutParameter("p_out_hora_inicio", Types.VARCHAR),
+                        new SqlOutParameter("p_out_fecha_termino", Types.DATE),
+                        new SqlOutParameter("p_out_hora_termino", Types.VARCHAR));
+
+        Map<String, Object> out = jdbcCall.execute(in);
+
+        if (!out.isEmpty()) {
+
+            reservaServicio.setIdServicio((Integer) out.get("p_out_id_servicio"));
+            reservaServicio.setDescripcion((String) out.get("p_out_descripcion"));
+            reservaServicio.setEstado((String) out.get("p_out_estado"));
+            reservaServicio.setMonto((Integer) out.get("p_out_monto"));
+            reservaServicio.setIdReserva((Integer) out.get("p_out_id_reserva"));
+            reservaServicio.setFechaInicio((Date) out.get("p_out_fecha_inicio"));
+            reservaServicio.setHoraInicio((String) out.get("p_out_hora_inicio"));
+            reservaServicio.setFechaTermino((Date) out.get("p_out_fecha_termino"));
+            reservaServicio.setHoraTermino((String) out.get("p_out_hora_termino"));
+
+        }
+
+        return reservaServicio;
+
+    }
+
+    public CheckInResponse buscarCheckIn(int idReserva) {
+
+        CheckInResponse checkInResponse = new CheckInResponse();
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", idReserva, Types.INTEGER)
+                .addValue("p_out_id_checkin", Types.INTEGER)
+                .addValue("p_out_fecha", Types.DATE)
+                .addValue("p_out_abono", Types.INTEGER)
+                .addValue("p_out_funcionario", Types.VARCHAR)
+                .addValue("p_out_id_reserva", Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_SEARCH_CHECK_IN_BY_BOOKING")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_checkin", Types.INTEGER),
+                        new SqlOutParameter("p_out_fecha", Types.DATE),
+                        new SqlOutParameter("p_out_abono", Types.INTEGER),
+                        new SqlOutParameter("p_out_funcionario", Types.VARCHAR),
+                        new SqlOutParameter("p_out_id_reserva", Types.INTEGER));
+
+        Map<String, Object> out = jdbcCall.execute(in);
+
+        if(!out.isEmpty()){
+
+            checkInResponse.setIdCheckIn((Integer) out.get("p_out_id_checkin"));
+            checkInResponse.setFecha((Date) out.get("p_out_fecha"));
+            checkInResponse.setAbono((Integer) out.get("p_out_abono"));
+            checkInResponse.setRunFuncionario((String) out.get("p_out_funcionario"));
+            checkInResponse.setIdReserva((Integer) out.get("p_out_id_reserva"));
+
+        }
+
+        return checkInResponse;
+
+    }
+
+    public CheckOutResponse buscarCheckOut(int idReserva){
+
+        CheckOutResponse checkOutResponse = new CheckOutResponse();
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", idReserva, Types.INTEGER)
+                .addValue("p_out_id_checkout", Types.INTEGER)
+                .addValue("p_out_fecha", Types.DATE)
+                .addValue("p_out_multa", Types.INTEGER)
+                .addValue("p_out_funcionario", Types.VARCHAR)
+                .addValue("p_out_id_reserva", Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_SEARCH_CHECK_OUT_BY_BOOKING")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlOutParameter("p_out_id_checkout", Types.INTEGER),
+                        new SqlOutParameter("p_out_fecha", Types.DATE),
+                        new SqlOutParameter("p_out_multa", Types.INTEGER),
+                        new SqlOutParameter("p_out_funcionario", Types.VARCHAR),
+                        new SqlOutParameter("p_out_id_reserva", Types.INTEGER));
+
+        Map<String, Object> out = jdbcCall.execute(in);
+
+        if(!out.isEmpty()){
+
+            checkOutResponse.setIdCheckOut((Integer) out.get("p_out_id_checkout"));
+            checkOutResponse.setFecha((Date) out.get("p_out_fecha"));
+            checkOutResponse.setMulta((Integer) out.get("p_out_multa"));
+            checkOutResponse.setRunFuncionario((String) out.get("p_out_funcionario"));
+            checkOutResponse.setIdReserva((Integer) out.get("p_out_id_reserva"));
+
+        }
+
+        return checkOutResponse;
+
+    }
+
+    public void actualizarCheckIn(ActualizarCheckIn actualizarCheckIn) {
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_checkin", actualizarCheckIn.getIdCheckin(), Types.INTEGER)
+                .addValue("p_fecha",actualizarCheckIn.getFecha(), Types.DATE)
+                .addValue("p_abono",actualizarCheckIn.getAbono(), Types.INTEGER)
+                .addValue("p_funcionario", actualizarCheckIn.getRunFuncionario(), Types.VARCHAR)
+                .addValue("p_id_reserva", actualizarCheckIn.getIdReserva(), Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_UPDATE_CHECKIN")
+                .declareParameters(new SqlParameter("p_id_checkin", Types.INTEGER),
+                        new SqlOutParameter("p_fecha", Types.DATE),
+                        new SqlOutParameter("p_abono", Types.INTEGER),
+                        new SqlOutParameter("p_funcionario", Types.VARCHAR),
+                        new SqlOutParameter("p_id_reserva", Types.INTEGER));
+
+        jdbcCall.execute(in);
+
+    }
+
+    public void actualizarCheckOut(ActualizarCheckOut actualizarCheckOut) {
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_checkout", actualizarCheckOut.getIdCheckout(), Types.INTEGER)
+                .addValue("p_fecha",actualizarCheckOut.getFecha(), Types.DATE)
+                .addValue("p_multa",actualizarCheckOut.getMulta(), Types.INTEGER)
+                .addValue("p_funcionario", actualizarCheckOut.getRunFuncionario(), Types.VARCHAR)
+                .addValue("p_id_reserva", actualizarCheckOut.getIdReserva(), Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_UPDATE_CHECKOUT")
+                .declareParameters(new SqlParameter("p_id_checkout", Types.INTEGER),
+                        new SqlOutParameter("p_fecha", Types.DATE),
+                        new SqlOutParameter("p_multa", Types.INTEGER),
+                        new SqlOutParameter("p_funcionario", Types.VARCHAR),
+                        new SqlOutParameter("p_id_reserva", Types.INTEGER));
+
+        jdbcCall.execute(in);
+
+    }
+
+
 }
