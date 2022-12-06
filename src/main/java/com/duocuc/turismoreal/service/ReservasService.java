@@ -101,7 +101,7 @@ public class ReservasService {
 
         try {
 
-            String query = "SELECT RC.CLIENTES_RUN, R.ID_RESERVA, R.FECHA_RESERVA, R.MONTO, R.ESTADO FROM RESERVAS R JOIN RESERVAS_CLIENTE RC ON R.ID_RESERVA = RC.ID_RESERVA"
+            String query = "SELECT RC.CLIENTES_RUN, R.ID_RESERVA, R.FECHA_RESERVA, R.MONTO, R.CANT_DEPARTAMENTOS, R.ESTADO FROM RESERVAS R JOIN RESERVAS_CLIENTE RC ON R.ID_RESERVA = RC.ID_RESERVA"
                     + " " + "WHERE RC.CLIENTES_RUN = ?";
 
             PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
@@ -118,6 +118,7 @@ public class ReservasService {
                 reserva.setIdReserva(rs.getInt("ID_RESERVA"));
                 reserva.setFechaReserva(rs.getDate("FECHA_RESERVA"));
                 reserva.setMonto(rs.getInt("MONTO"));
+                reserva.setCantDepartamento(rs.getInt("CANT_DEPARTAMENTOS"));
                 reserva.setEstado(rs.getString("ESTADO"));
 
                 reservas.add(reserva);
@@ -139,7 +140,7 @@ public class ReservasService {
 
         try {
 
-            String query = "SELECT RC.CLIENTES_RUN, R.ID_RESERVA, R.FECHA_RESERVA, R.MONTO, R.ESTADO FROM RESERVAS R JOIN RESERVAS_CLIENTE RC ON R.ID_RESERVA = RC.ID_RESERVA";
+            String query = "SELECT RC.CLIENTES_RUN, R.ID_RESERVA, R.FECHA_RESERVA, R.CANT_DEPARTAMENTOS, R.MONTO, R.ESTADO FROM RESERVAS R JOIN RESERVAS_CLIENTE RC ON R.ID_RESERVA = RC.ID_RESERVA";
 
             PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
 
@@ -152,6 +153,7 @@ public class ReservasService {
                 reserva.setRunCliente(rs.getString("CLIENTES_RUN"));
                 reserva.setIdReserva(rs.getInt("ID_RESERVA"));
                 reserva.setFechaReserva(rs.getDate("FECHA_RESERVA"));
+                reserva.setCantDepartamento(rs.getInt("CANT_DEPARTAMENTOS"));
                 reserva.setMonto(rs.getInt("MONTO"));
                 reserva.setEstado(rs.getString("ESTADO"));
 

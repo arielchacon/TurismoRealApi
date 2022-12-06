@@ -6,15 +6,18 @@ public class ReservaResponse {
     
     private String runCliente;
     private int idReserva;
+    private int cantDepartamento;
     private Date fechaReserva;
     private int monto;
     private String estado;
 
     public ReservaResponse() {}
 
-    public ReservaResponse(String runCliente, int idReserva, Date fechaReserva, int monto, String estado) {
+    public ReservaResponse(String runCliente, int idReserva, int cantDepartamento, Date fechaReserva, int monto,
+            String estado) {
         this.runCliente = runCliente;
         this.idReserva = idReserva;
+        this.cantDepartamento = cantDepartamento;
         this.fechaReserva = fechaReserva;
         this.monto = monto;
         this.estado = estado;
@@ -58,6 +61,14 @@ public class ReservaResponse {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public int getCantDepartamento() {
+        return cantDepartamento;
+    }
+
+    public void setCantDepartamento(int cantDepartamento) {
+        this.cantDepartamento = cantDepartamento;
     }
 
     
