@@ -58,7 +58,7 @@ public class UsuarioController {
     public ResponseEntity<?> registrarCliente(@RequestBody(required = true) RegistroCliente registroCliente, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors())
-            return new ResponseEntity(new Mensaje("campos vacíos o email inválido"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("campos vacíos o email inválido"), HttpStatus.BAD_REQUEST);
 
         String passwordEncode = passwordEncoder.encode(registroCliente.getPassword());
 
@@ -66,7 +66,7 @@ public class UsuarioController {
 
         clienteService.registrarCliente(registroCliente);
 
-       return new ResponseEntity(new Mensaje("ok"), HttpStatus.CREATED);
+       return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.CREATED);
 
     }
 

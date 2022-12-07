@@ -39,7 +39,7 @@ public class FuncionarioController {
 
         funcionarioService.registrarFuncionario(registroFuncionario);
 
-        return new ResponseEntity(new Mensaje("ok"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.CREATED);
 
     }
 
@@ -49,7 +49,7 @@ public class FuncionarioController {
 
         funcionarioService.actualizarFuncionario(runFuncionario, actualizarFuncionario);
 
-        return new ResponseEntity(new Mensaje("ok"), HttpStatus.OK);
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.OK);
 
     }
 
