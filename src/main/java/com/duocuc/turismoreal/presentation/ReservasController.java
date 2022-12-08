@@ -127,6 +127,20 @@ public class ReservasController {
 
     }
 
+    @GetMapping("/listar-check-in")
+    public List<CheckInResponse> listarCheckIn(){
+
+        return reservasService.listarCheckIn();
+
+    }
+
+    @GetMapping("/listar-check-out")
+    public List<CheckOutResponse> listarCheckOut(){
+
+        return reservasService.listarCheckOut();
+
+    }
+
     @PutMapping("/actualizar-checkin")
     public ResponseEntity<?> actualizarCheckIn(@RequestBody(required = true)ActualizarCheckIn actualizarCheckIn ){
 

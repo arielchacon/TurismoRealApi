@@ -440,6 +440,74 @@ public class ReservasService {
 
     }
 
+    public List<CheckInResponse> listarCheckIn(){
+
+        List<CheckInResponse> checkins = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT ID_CHECKIN, FECHA, ABONO, FUNCIONARIOS_RUN, RESERVAS_ID_RESERVA FROM CHECK_IN";
+
+            PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                CheckInResponse checkin = new CheckInResponse();
+
+                checkin.setIdCheckIn(rs.getInt("ID_CHECKIN"));
+                checkin.setFecha(rs.getDate("FECHA"));
+                checkin.setAbono(rs.getInt("ABONO"));
+                checkin.setRunFuncionario(rs.getString("FUNCIONARIOS_RUN"));
+                checkin.setIdReserva(rs.getInt("RESERVAS_ID_RESERVA"));
+
+                checkins.add(checkin);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return checkins;
+
+    }
+
+    public List<CheckOutResponse> listarCheckOut(){
+
+        List<CheckOutResponse> checkouts = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT ID_CHECKOUT, FECHA, MULTA, FUNCIONARIOS_RUN, RESERVAS_ID_RESERVA FROM CHECK_OUT";
+
+            PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                CheckOutResponse checkout = new CheckOutResponse();
+
+                checkout.setIdCheckOut(rs.getInt("ID_CHECKOUT"));
+                checkout.setFecha(rs.getDate("FECHA"));
+                checkout.setMulta(rs.getInt("MULTA"));
+                checkout.setRunFuncionario(rs.getString("FUNCIONARIOS_RUN"));
+                checkout.setIdReserva(rs.getInt("RESERVAS_ID_RESERVA"));
+
+                checkouts.add(checkout);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return checkouts;
+
+    }
+
     public void actualizarCheckIn(ActualizarCheckIn actualizarCheckIn) {
 
         SqlParameterSource in = new MapSqlParameterSource()

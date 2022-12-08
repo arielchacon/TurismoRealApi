@@ -69,6 +69,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/inventario/**").permitAll()
                 .antMatchers("/departamento/**").permitAll()
                 .antMatchers("/edificio/**").permitAll()
+                .antMatchers("/servicios/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
