@@ -21,11 +21,13 @@ import com.duocuc.turismoreal.request.ActualizarCheckOut;
 import com.duocuc.turismoreal.request.ActualizarReserva;
 import com.duocuc.turismoreal.request.RegistrarReserva;
 import com.duocuc.turismoreal.request.RegistrarReservaServicio;
+import com.duocuc.turismoreal.request.RegistrarServicioTransporte;
 import com.duocuc.turismoreal.response.CheckInResponse;
 import com.duocuc.turismoreal.response.CheckOutResponse;
 import com.duocuc.turismoreal.response.ReservaDepartamentoResponse;
 import com.duocuc.turismoreal.response.ReservaResponse;
 import com.duocuc.turismoreal.response.ReservaServicioResponse;
+import com.duocuc.turismoreal.response.ReservaTransporteResponse;
 import com.duocuc.turismoreal.service.ReservasService;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -156,6 +158,22 @@ public class ReservasController {
         reservasService.actualizarCheckOut(actualizarCheckOut);
 
         return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.OK);
+    }
+
+    @PostMapping("/crear-reserva-transporte")
+    public ResponseEntity<?> crearReservaTransporte(@RequestBody(required = true) RegistrarServicioTransporte servicioTransporte){
+
+        reservasService.crearReservaTransporte(servicioTransporte);
+
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/listar-reserva-transporte/{idReserva}")
+    public List<ReservaTransporteResponse> listarReservaTransporte(@PathVariable("idReserva") int idReserva){
+
+        return reservasService.listarReservaTransporte(idReserva);
+
     }
 
 

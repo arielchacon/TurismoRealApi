@@ -3,6 +3,7 @@ package com.duocuc.turismoreal.presentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duocuc.turismoreal.request.ActualizarCliente;
+import com.duocuc.turismoreal.response.InfoClienteResponse;
 import com.duocuc.turismoreal.service.ClienteService;
 
 @RestController
@@ -34,6 +36,13 @@ public class ClienteController {
     public void eliminarCliente(@PathVariable(required = true) String runCliente){
 
         clienteService.borrarCliente(runCliente);
+
+    }
+
+    @GetMapping("/buscar-info/{nombreUsuario}")
+    public InfoClienteResponse buscarInfo(@PathVariable("nombreUsuario") String nombreUsuario){
+
+        return clienteService.buscarInformacionCliente(nombreUsuario);
 
     }
 

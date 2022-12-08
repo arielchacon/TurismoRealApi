@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duocuc.turismoreal.dto.Mensaje;
+import com.duocuc.turismoreal.request.ActualizarServicio;
+import com.duocuc.turismoreal.request.RegistrarTransporte;
 import com.duocuc.turismoreal.request.RegistroServicio;
 import com.duocuc.turismoreal.service.ServiciosService;
 import com.duocuc.turismoreal.response.*;
@@ -44,6 +46,33 @@ public class ServicioController {
     public List<ServicioResponse> listarServicios(){
 
         return serviciosService.listarServicios();
+
+    }
+
+    @DeleteMapping("/borrar/{idServicio}")
+    public ResponseEntity<?> borrarServicio(@PathVariable("idServicio") int idservicio){
+
+        serviciosService.borrarServicio(idservicio);
+
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.OK);
+
+    }
+
+    @PutMapping("/actualizar")
+    public ResponseEntity<?> actualziarServicio(@RequestBody(required = true) ActualizarServicio actualizarServicio){
+
+        serviciosService.actualizarServicio(actualizarServicio);
+
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.OK);
+
+    }
+
+    @PostMapping("/crear-transporte")
+    public ResponseEntity<?> crearTranporte(@RequestBody(required = true) RegistrarTransporte registrarTransporte){
+
+        serviciosService.registrarTransporte(registrarTransporte);;
+
+        return new ResponseEntity<>(new Mensaje("ok"), HttpStatus.CREATED);
 
     }
 

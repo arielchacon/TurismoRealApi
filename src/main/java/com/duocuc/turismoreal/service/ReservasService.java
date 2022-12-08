@@ -25,11 +25,13 @@ import com.duocuc.turismoreal.request.ActualizarCheckOut;
 import com.duocuc.turismoreal.request.ActualizarReserva;
 import com.duocuc.turismoreal.request.RegistrarReserva;
 import com.duocuc.turismoreal.request.RegistrarReservaServicio;
+import com.duocuc.turismoreal.request.RegistrarServicioTransporte;
 import com.duocuc.turismoreal.response.CheckInResponse;
 import com.duocuc.turismoreal.response.CheckOutResponse;
 import com.duocuc.turismoreal.response.ReservaDepartamentoResponse;
 import com.duocuc.turismoreal.response.ReservaResponse;
 import com.duocuc.turismoreal.response.ReservaServicioResponse;
+import com.duocuc.turismoreal.response.ReservaTransporteResponse;
 
 @Service
 public class ReservasService {
@@ -100,6 +102,63 @@ public class ReservasService {
                         new SqlParameter("p_in_hora_termino", Types.VARCHAR));
 
         jdbcCall.execute(in);
+
+    }
+
+    public void crearReservaTransporte(RegistrarServicioTransporte transporteServicio){
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_in_id_reserva", transporteServicio.getIdReserva(), Types.INTEGER)
+                .addValue("p_in_id_transporte", transporteServicio.getIdTransporte(), Types.INTEGER);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                .withProcedureName("SP_CREATE_TRANSPORTATION_BOOKING")
+                .declareParameters(new SqlParameter("p_in_id_reserva", Types.INTEGER),
+                        new SqlParameter("p_in_id_transporte", Types.INTEGER));
+
+        jdbcCall.execute(in);
+
+    }
+
+    public List<ReservaTransporteResponse> listarReservaTransporte(int idReserva){
+
+        List<ReservaTransporteResponse> reservas = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT TRANSPORTE.ID_TRANSPORTE, DIRECCION_DESDE, DIRECCION_HASTA, HORA_INICIO, FECHA_INICIO,"
+            +"MONTO, ESTADO, ID_VEHICULO, ID_RESERVA FROM TRANSPORTE JOIN TRANSPORTES_RESERVAS ON TRANSPORTE.ID_TRANSPORTE = TRANSPORTES_RESERVAS.ID_TRANSPORTE WHERE ID_RESERVA = ?";
+
+            PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+            stm.setInt(1, idReserva);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                ReservaTransporteResponse reserva = new ReservaTransporteResponse();
+
+                reserva.setIdTransporte(rs.getInt("ID_TRANSPORTE"));
+                reserva.setDireccionDesde(rs.getString("DIRECCION_DESDE"));
+                reserva.setDireccionHasta(rs.getString("DIRECCION_HASTA"));
+                reserva.setHoraInicio(rs.getString("HORA_INICIO"));
+                reserva.setFechaInicio(rs.getDate("FECHA_INICIO"));
+                reserva.setMonto(rs.getInt("MONTO"));
+                reserva.setEstado(rs.getString("ESTADO"));
+                reserva.setIdVehiculo(rs.getInt("ID_VEHICULO"));
+                reserva.setIdReserva(rs.getInt("ID_RESERVA"));
+
+                reservas.add(reserva);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return reservas;
 
     }
 

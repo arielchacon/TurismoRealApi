@@ -1,5 +1,7 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 
 import javax.sql.DataSource;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.request.ActualizarCliente;
 import com.duocuc.turismoreal.request.RegistroCliente;
+import com.duocuc.turismoreal.response.InfoClienteResponse;
 
 /**
  * ClienteService - Clase con la logica de invocacion a los procedimientos para la mantencion de clientes
@@ -108,6 +111,38 @@ public class ClienteService {
                                                 new SqlParameter("p_id_comuna", Types.INTEGER));
 
                 jdbcCall.execute(in);
+
+        }
+
+        public InfoClienteResponse buscarInformacionCliente(String nombreUsuario){
+
+                InfoClienteResponse info = new InfoClienteResponse();
+
+                try {
+
+                        String query = "SELECT RUN, NOMBRE_USUARIO, ES_FRECUENTE FROM CLIENTES WHERE NOMBRE_USUARIO = ?";
+            
+                        PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+                        stm.setString(1, nombreUsuario);
+            
+                        ResultSet rs = stm.executeQuery();
+            
+                        while (rs.next()) {
+
+                        info.setRun(rs.getString("RUN"));
+                        info.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                        info.setEsFrecuente(rs.getBoolean("ES_FRECUENTE"));
+                            
+                        }
+            
+                    } catch (Exception e) {
+            
+                        e.printStackTrace();
+                    }
+            
+
+                return info;
 
         }
 
