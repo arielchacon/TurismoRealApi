@@ -1,7 +1,11 @@
 package com.duocuc.turismoreal.service;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -79,6 +83,44 @@ public class MantenimientoService {
                 .declareParameters(new SqlParameter("p_in_id_mantencion", Types.INTEGER));
 
         jdbcCall.execute(in);
+
+    }
+
+    public List<MantenimientoResponse> listarMantenimientos(){
+
+        List<MantenimientoResponse> mantenimientos = new ArrayList<>();
+
+        try {
+
+                String query = "SELECT ID_MANTENCION, DESCRIPCION, ESTADO, FECHA_MANTENCION, COSTO, ID_DEPARTAMENTO FROM MANTENCIONES";
+    
+                PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+                ResultSet rs = stm.executeQuery();
+    
+                while (rs.next()) {
+    
+                    MantenimientoResponse mantencion = new MantenimientoResponse();
+
+                    mantencion.setIdMantencion(rs.getInt("ID_MANTENCION"));
+                    mantencion.setDescripcion(rs.getString("DESCRIPCION"));
+                    mantencion.setEstado(rs.getString("ESTADO"));
+                    mantencion.setFechaMantencion(rs.getDate("FECHA_MANTENCION"));
+                    mantencion.setCosto(rs.getInt("COSTO"));
+                    mantencion.setIdDepartamento(rs.getInt("ID_DEPARTAMENTO"));
+
+                    mantenimientos.add(mantencion);
+    
+                }
+    
+                rs.close();
+    
+            } catch (Exception e) {
+    
+                e.printStackTrace();
+    
+            }
+
+        return mantenimientos;
 
     }
 

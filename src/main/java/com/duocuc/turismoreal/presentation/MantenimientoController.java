@@ -1,5 +1,7 @@
 package com.duocuc.turismoreal.presentation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,13 @@ public class MantenimientoController {
     public MantenimientoResponse buscarMantenimiento(@PathVariable("idMantencion") int idMantencion){
 
         return mantenimientoService.buscarMantenimiento(idMantencion);
+
+    }
+
+    @GetMapping("/listar")
+    public List<MantenimientoResponse> listarMantenimientos(){
+
+        return mantenimientoService.listarMantenimientos();
 
     }
 

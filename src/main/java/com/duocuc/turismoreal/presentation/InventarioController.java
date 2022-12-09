@@ -76,7 +76,7 @@ public class InventarioController {
     }
 
     @GetMapping("/inventario-objeto/{idInventario}")
-    public InventarioObjetoRespone listarObjetosInventario(int idInventario){
+    public InventarioObjetoRespone listarObjetosInventario(@PathVariable("idInventario") int idInventario){
 
         return inventarioService.listarObjetosInventario(idInventario);
 

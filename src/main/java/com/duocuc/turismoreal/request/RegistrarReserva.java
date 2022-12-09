@@ -13,12 +13,13 @@ public class RegistrarReserva {
     private String runFuncionario;
     private Date fechaCheckout;
     private int multa;
+    private String runCliente;
     private int idDepartamento;
 
     public RegistrarReserva () {}
 
     public RegistrarReserva(int cantDepartamento, Date fechaReserva, int monto, String estado, Date fechaCheckin,
-            int abono, String runFuncionario, Date fechaCheckout, int multa, int idDepartamento) {
+            int abono, String runFuncionario, Date fechaCheckout, int multa, String runCliente, int idDepartamento) {
         this.cantDepartamento = cantDepartamento;
         this.fechaReserva = fechaReserva;
         this.monto = monto;
@@ -28,6 +29,7 @@ public class RegistrarReserva {
         this.runFuncionario = runFuncionario;
         this.fechaCheckout = fechaCheckout;
         this.multa = multa;
+        this.runCliente = runCliente;
         this.idDepartamento = idDepartamento;
     }
 
@@ -110,5 +112,15 @@ public class RegistrarReserva {
     public void setIdDepartamento(int idDepartamento) {
         this.idDepartamento = idDepartamento;
     }
+
+    public String getRunCliente() {
+        return runCliente;
+    }
+
+    public void setRunCliente(String runCliente) {
+        this.runCliente = runCliente;
+    }
+
+    
 
 }

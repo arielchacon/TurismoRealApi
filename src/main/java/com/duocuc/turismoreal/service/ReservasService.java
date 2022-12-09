@@ -53,6 +53,7 @@ public class ReservasService {
                 .addValue("p_in_funcionario", registrarReserva.getRunFuncionario(), Types.VARCHAR)
                 .addValue("p_in_fecha_checkout", registrarReserva.getFechaCheckout(), Types.DATE)
                 .addValue("p_in_multa", registrarReserva.getMulta(), Types.INTEGER)
+                .addValue("p_cliente_run", registrarReserva.getRunCliente() ,Types.VARCHAR)
                 .addValue("p_in_id_departamento", registrarReserva.getIdDepartamento(), Types.INTEGER)
                 .addValue("p_out_id_reserva", Types.INTEGER);
 
@@ -67,6 +68,7 @@ public class ReservasService {
                         new SqlParameter("p_in_funcionario", Types.VARCHAR),
                         new SqlParameter("p_in_fecha_checkout", Types.DATE),
                         new SqlParameter("p_in_multa", Types.INTEGER),
+                        new SqlParameter("p_cliente_run", Types.VARCHAR),
                         new SqlParameter("p_in_id_departamento", Types.INTEGER),
                         new SqlOutParameter("p_out_id_reserva", Types.INTEGER));
 
