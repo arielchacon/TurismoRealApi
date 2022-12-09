@@ -300,7 +300,7 @@ public class ReservasService {
 
         if (!out.isEmpty()) {
 
-            reserva.setIdReserva((Integer) out.get("p_in_id_reserva"));
+            reserva.setIdReserva((Integer) out.get("p_out_id_reserva"));
             reserva.setCantDepartamento((Integer) out.get("p_out_cant_depto"));
             reserva.setFechaReserva((Date) out.get("p_out_fecha_reserva"));
             reserva.setMonto((Integer) out.get("p_out_monto"));

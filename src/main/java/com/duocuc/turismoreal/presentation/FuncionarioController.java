@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.duocuc.turismoreal.dto.Mensaje;
 import com.duocuc.turismoreal.request.ActualizarFuncionario;
 import com.duocuc.turismoreal.request.RegistroFuncionario;
+import com.duocuc.turismoreal.response.FuncionarioResponse;
 import com.duocuc.turismoreal.service.FuncionarioService;
 
 @RestController
@@ -57,6 +59,13 @@ public class FuncionarioController {
     public void eliminarFuncionario(@PathVariable(required = true) String runFuncionario){
 
         funcionarioService.borrarFuncionario(runFuncionario);
+
+    }
+
+    @GetMapping("/buscar/{nombreUsuario}")
+    public FuncionarioResponse buscarFuncionario(@PathVariable("nombreUsuario") String nombreUsuario){
+
+        return funcionarioService.buscarFuncionario(nombreUsuario);
 
     }
 }

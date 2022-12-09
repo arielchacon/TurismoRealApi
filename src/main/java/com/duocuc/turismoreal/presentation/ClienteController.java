@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duocuc.turismoreal.request.ActualizarCliente;
+import com.duocuc.turismoreal.response.ClienteResponse;
 import com.duocuc.turismoreal.response.InfoClienteResponse;
 import com.duocuc.turismoreal.service.ClienteService;
 
@@ -43,6 +44,13 @@ public class ClienteController {
     public InfoClienteResponse buscarInfo(@PathVariable("nombreUsuario") String nombreUsuario){
 
         return clienteService.buscarInformacionCliente(nombreUsuario);
+
+    }
+
+    @GetMapping("/buscar/{nombreUsuario}")
+    public ClienteResponse buscarCliente(@PathVariable("nombreUsuario") String nombreUsuario){
+
+        return clienteService.buscarCliente(nombreUsuario);
 
     }
 

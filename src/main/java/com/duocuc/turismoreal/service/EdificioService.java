@@ -84,7 +84,7 @@ public class EdificioService {
 
                 try {
 
-                        String query = "SELECT ID_EDIFICIO, DIRECCION, ESTADO, ID_COMUNA, NOMBRE FROM EDIFICIOS WHERE ID_COMUNA= ?";
+                        String query = "SELECT ID_EDIFICIO, DIRECCION, ESTADO, COMUNAS_ID_COMUNA, NOMBRE FROM EDIFICIOS WHERE COMUNAS_ID_COMUNA= ?";
                         PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
 
                         stm.setInt(1, idComuna);
@@ -94,7 +94,7 @@ public class EdificioService {
                         while (rs.next()) {
 
                                 EdificioResponse edificio = new EdificioResponse(rs.getInt("ID_EDIFICIO"), 
-                                rs.getString("NOMBRE"), rs.getString("DIRECCION"), rs.getInt("ID_COMUNA"), 
+                                rs.getString("NOMBRE"), rs.getString("DIRECCION"), rs.getInt("COMUNAS_ID_COMUNA"), 
                                 rs.getString("ESTADO"));
 
                                 edificios.add(edificio);

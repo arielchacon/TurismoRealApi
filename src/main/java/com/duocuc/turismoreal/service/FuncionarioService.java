@@ -1,5 +1,7 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 
 import javax.sql.DataSource;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.request.ActualizarFuncionario;
 import com.duocuc.turismoreal.request.RegistroFuncionario;
+import com.duocuc.turismoreal.response.FuncionarioResponse;
 
 /**
  * FuncionarioService - Clase con la logica de invocacion a los procedimientos para la mantencion de funcionarios
@@ -108,6 +111,47 @@ public class FuncionarioService {
                                                 new SqlParameter("p_id_comuna", Types.INTEGER));
 
                 jdbcCall.execute(in);
+        }
+
+        public FuncionarioResponse buscarFuncionario(String runFuncionario){
+
+                FuncionarioResponse funcionario = new FuncionarioResponse();
+
+                try {
+
+                        String query = "SELECT RUN, NOMBRE, APPATERNO, APMATERNO, GENERO, DIRECCION, FECHA_NACIMIENTO, TELEFONO, CORREO, CARGO, ESTADO, NOMBRE_USUARIO, ID_COMUNA FROM FUNCIONARIOS WHERE NOMBRE_USUARIO = ?";
+            
+                        PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+                        stm.setString(1, runFuncionario);
+            
+                        ResultSet rs = stm.executeQuery();
+            
+                        while (rs.next()) {
+
+                        funcionario.setRun(rs.getString("RUN"));
+                        funcionario.setNombre(rs.getString("NOMBRE"));
+                        funcionario.setApPaterno(rs.getString("APPATERNO"));
+                        funcionario.setApMaterno(rs.getString("APMATERNO"));
+                        funcionario.setGenero(rs.getString("GENERO"));
+                        funcionario.setDireccion(rs.getString("DIRECCION"));
+                        funcionario.setFechaNacimiento(rs.getDate("FECHA_NACIMIENTO"));
+                        funcionario.setTelefono(rs.getString("TELEFONO"));
+                        funcionario.setCorreo(rs.getString("CORREO"));
+                        funcionario.setCargo(rs.getString("CARGO"));
+                        funcionario.setEstado(rs.getString("ESTADO"));
+                        funcionario.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                        funcionario.setIdComuna(rs.getInt("ID_COMUNA"));
+                            
+                        }
+            
+                    } catch (Exception e) {
+            
+                        e.printStackTrace();
+                    }
+
+                return funcionario;
+
         }
 
 }

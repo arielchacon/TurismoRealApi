@@ -2,7 +2,7 @@ package com.duocuc.turismoreal.response;
 
 import java.sql.Date;
 
-public class ClienteResponse {
+public class FuncionarioResponse {
     
     private String run;
     private String nombre;
@@ -12,15 +12,15 @@ public class ClienteResponse {
     private String direccion;
     private Date fechaNacimiento;
     private String telefono;
-    private String telefono2;
-    private String correoElectronico;
-    private boolean esFrecuente;
-    private int idComuna;
+    private String correo;
+    private String cargo;
+    private String estado;
     private String nombreUsuario;
-    
-    public ClienteResponse(String run, String nombre, String apPaterno, String apMaterno, String genero,
-            String direccion, Date fechaNacimiento, String telefono, String telefono2, String correoElectronico,
-            boolean esFrecuente, int idComuna, String nombreUsuario) {
+    private int idComuna;
+
+    public FuncionarioResponse(String run, String nombre, String apPaterno, String apMaterno, String genero,
+            String direccion, Date fechaNacimiento, String telefono, String correo, String cargo, String estado,
+            String nombreUsuario, int idComuna) {
         this.run = run;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
@@ -29,14 +29,14 @@ public class ClienteResponse {
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
-        this.telefono2 = telefono2;
-        this.correoElectronico = correoElectronico;
-        this.esFrecuente = esFrecuente;
-        this.idComuna = idComuna;
+        this.correo = correo;
+        this.cargo = cargo;
+        this.estado = estado;
         this.nombreUsuario = nombreUsuario;
+        this.idComuna = idComuna;
     }
 
-    public ClienteResponse() {
+    public FuncionarioResponse() {
     }
 
     public String getRun() {
@@ -103,36 +103,28 @@ public class ClienteResponse {
         this.telefono = telefono;
     }
 
-    public String getTelefono2() {
-        return telefono2;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setTelefono2(String telefono2) {
-        this.telefono2 = telefono2;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
-    public boolean isEsFrecuente() {
-        return esFrecuente;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setEsFrecuente(boolean esFrecuente) {
-        this.esFrecuente = esFrecuente;
-    }
-
-    public int getIdComuna() {
-        return idComuna;
-    }
-
-    public void setIdComuna(int idComuna) {
-        this.idComuna = idComuna;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getNombreUsuario() {
@@ -143,5 +135,12 @@ public class ClienteResponse {
         this.nombreUsuario = nombreUsuario;
     }
 
-    
+    public int getIdComuna() {
+        return idComuna;
+    }
+
+    public void setIdComuna(int idComuna) {
+        this.idComuna = idComuna;
+    }
+
 }

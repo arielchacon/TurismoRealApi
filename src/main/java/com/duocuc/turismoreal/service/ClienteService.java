@@ -1,12 +1,15 @@
 package com.duocuc.turismoreal.service;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -15,10 +18,12 @@ import org.springframework.stereotype.Service;
 
 import com.duocuc.turismoreal.request.ActualizarCliente;
 import com.duocuc.turismoreal.request.RegistroCliente;
+import com.duocuc.turismoreal.response.ClienteResponse;
 import com.duocuc.turismoreal.response.InfoClienteResponse;
 
 /**
- * ClienteService - Clase con la logica de invocacion a los procedimientos para la mantencion de clientes
+ * ClienteService - Clase con la logica de invocacion a los procedimientos para
+ * la mantencion de clientes
  */
 @Service
 public class ClienteService {
@@ -28,7 +33,6 @@ public class ClienteService {
 
         public void registrarCliente(RegistroCliente registroCliente) {
 
-               
                 SqlParameterSource in = new MapSqlParameterSource()
                                 .addValue("p_run", registroCliente.getRun(), Types.VARCHAR)
                                 .addValue("p_nombre", registroCliente.getNombre(), Types.VARCHAR)
@@ -79,7 +83,7 @@ public class ClienteService {
 
         }
 
-        public void actualizarCliente(String run, ActualizarCliente actualizarCliente){
+        public void actualizarCliente(String run, ActualizarCliente actualizarCliente) {
 
                 SqlParameterSource in = new MapSqlParameterSource()
                                 .addValue("p_run", run, Types.VARCHAR)
@@ -94,7 +98,7 @@ public class ClienteService {
                                 .addValue("p_correo", actualizarCliente.getCorreo(), Types.VARCHAR)
                                 .addValue("p_es_frecuente", actualizarCliente.getEsFrecuente(), Types.CHAR)
                                 .addValue("p_id_comuna", actualizarCliente.getIdComuna(), Types.INTEGER);
-                                
+
                 SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
                                 .withProcedureName("SP_CREATE_CLIENT")
                                 .declareParameters(new SqlParameter("p_run", Types.VARCHAR),
@@ -114,35 +118,95 @@ public class ClienteService {
 
         }
 
-        public InfoClienteResponse buscarInformacionCliente(String nombreUsuario){
+        public InfoClienteResponse buscarInformacionCliente(String nombreUsuario) {
 
                 InfoClienteResponse info = new InfoClienteResponse();
 
                 try {
 
                         String query = "SELECT RUN, NOMBRE_USUARIO, ES_FRECUENTE FROM CLIENTES WHERE NOMBRE_USUARIO = ?";
-            
+
                         PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
 
                         stm.setString(1, nombreUsuario);
-            
+
                         ResultSet rs = stm.executeQuery();
-            
+
                         while (rs.next()) {
 
-                        info.setRun(rs.getString("RUN"));
-                        info.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
-                        info.setEsFrecuente(rs.getBoolean("ES_FRECUENTE"));
-                            
+                                info.setRun(rs.getString("RUN"));
+                                info.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+                                info.setEsFrecuente(rs.getBoolean("ES_FRECUENTE"));
+
                         }
-            
-                    } catch (Exception e) {
-            
+
+                } catch (Exception e) {
+
                         e.printStackTrace();
-                    }
-            
+                }
 
                 return info;
+
+        }
+
+        public ClienteResponse buscarCliente(String nombreUsuario) {
+
+                ClienteResponse cliente = new ClienteResponse();
+
+                SqlParameterSource in = new MapSqlParameterSource()
+                                .addValue("p_nombre_usuario", nombreUsuario, Types.VARCHAR)
+                                .addValue("p_out_run", Types.VARCHAR)
+                                .addValue("p_out_nombre", Types.VARCHAR)
+                                .addValue("p_out_appaterno", Types.VARCHAR)
+                                .addValue("p_out_apmaterno", Types.VARCHAR)
+                                .addValue("p_out_genero", Types.VARCHAR)
+                                .addValue("p_out_direccion", Types.VARCHAR)
+                                .addValue("p_out_fecha_nacimiento", Types.DATE)
+                                .addValue("p_out_telefono", Types.VARCHAR)
+                                .addValue("p_out_telefono_2", Types.VARCHAR)
+                                .addValue("p_out_correo", Types.VARCHAR)
+                                .addValue("p_out_es_frecuente", Types.CHAR)
+                                .addValue("p_out_id_comuna", Types.INTEGER)
+                                .addValue("p_out_nombre_usuario", Types.VARCHAR);
+
+                SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
+                                .withProcedureName("SP_SEARCH_CLIENT")
+                                .declareParameters(new SqlParameter("p_nombre_usuario", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_run", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_nombre", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_appaterno", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_apmaterno", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_genero", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_direccion", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_fecha_nacimiento", Types.DATE),
+                                                new SqlOutParameter("p_out_telefono", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_telefono_2", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_correo", Types.VARCHAR),
+                                                new SqlOutParameter("p_out_es_frecuente", Types.CHAR),
+                                                new SqlOutParameter("p_out_id_comuna", Types.INTEGER),
+                                                new SqlOutParameter("p_out_nombre_usuario", Types.VARCHAR));
+
+                Map<String, Object> out = jdbcCall.execute(in);
+
+                if (!out.isEmpty()) {
+
+                        cliente.setRun((String) out.get("p_out_run"));
+                        cliente.setNombre((String) out.get("p_out_nombre"));
+                        cliente.setApPaterno((String) out.get("p_out_appaterno"));
+                        cliente.setApMaterno((String) out.get("p_out_apmaterno"));
+                        cliente.setGenero((String) out.get("p_out_genero"));
+                        cliente.setDireccion((String) out.get("p_out_direccion"));
+                        cliente.setFechaNacimiento((Date) out.get("p_out_fecha_nacimiento"));
+                        cliente.setTelefono((String) out.get("p_out_telefono"));
+                        cliente.setTelefono2((String) out.get("p_out_telefono_2"));
+                        cliente.setCorreoElectronico((String) out.get("p_out_correo"));
+                        cliente.setEsFrecuente((Boolean) out.get("p_out_es_frecuente"));
+                        cliente.setIdComuna((Integer) out.get("p_out_id_comuna"));
+                        cliente.setNombreUsuario((String) out.get("p_out_nombre_usuario"));
+
+                }
+
+                return cliente;
 
         }
 
