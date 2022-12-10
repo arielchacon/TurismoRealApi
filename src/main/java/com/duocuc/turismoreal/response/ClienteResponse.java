@@ -14,13 +14,11 @@ public class ClienteResponse {
     private String telefono;
     private String telefono2;
     private String correoElectronico;
-    private boolean esFrecuente;
     private int idComuna;
     private String nombreUsuario;
     
     public ClienteResponse(String run, String nombre, String apPaterno, String apMaterno, String genero,
-            String direccion, Date fechaNacimiento, String telefono, String telefono2, String correoElectronico,
-            boolean esFrecuente, int idComuna, String nombreUsuario) {
+            String direccion, Date fechaNacimiento, String telefono, String telefono2, String correoElectronico, int idComuna, String nombreUsuario) {
         this.run = run;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
@@ -31,7 +29,6 @@ public class ClienteResponse {
         this.telefono = telefono;
         this.telefono2 = telefono2;
         this.correoElectronico = correoElectronico;
-        this.esFrecuente = esFrecuente;
         this.idComuna = idComuna;
         this.nombreUsuario = nombreUsuario;
     }
@@ -117,14 +114,6 @@ public class ClienteResponse {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
-    }
-
-    public boolean isEsFrecuente() {
-        return esFrecuente;
-    }
-
-    public void setEsFrecuente(boolean esFrecuente) {
-        this.esFrecuente = esFrecuente;
     }
 
     public int getIdComuna() {

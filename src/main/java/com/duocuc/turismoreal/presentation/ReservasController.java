@@ -34,8 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping("reservas")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-        RequestMethod.DELETE })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class ReservasController {
 
     @Autowired

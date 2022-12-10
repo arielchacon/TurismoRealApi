@@ -165,7 +165,6 @@ public class ClienteService {
                                 .addValue("p_out_telefono", Types.VARCHAR)
                                 .addValue("p_out_telefono_2", Types.VARCHAR)
                                 .addValue("p_out_correo", Types.VARCHAR)
-                                .addValue("p_out_es_frecuente", Types.CHAR)
                                 .addValue("p_out_id_comuna", Types.INTEGER)
                                 .addValue("p_out_nombre_usuario", Types.VARCHAR);
 
@@ -182,7 +181,6 @@ public class ClienteService {
                                                 new SqlOutParameter("p_out_telefono", Types.VARCHAR),
                                                 new SqlOutParameter("p_out_telefono_2", Types.VARCHAR),
                                                 new SqlOutParameter("p_out_correo", Types.VARCHAR),
-                                                new SqlOutParameter("p_out_es_frecuente", Types.CHAR),
                                                 new SqlOutParameter("p_out_id_comuna", Types.INTEGER),
                                                 new SqlOutParameter("p_out_nombre_usuario", Types.VARCHAR));
 
@@ -200,7 +198,6 @@ public class ClienteService {
                         cliente.setTelefono((String) out.get("p_out_telefono"));
                         cliente.setTelefono2((String) out.get("p_out_telefono_2"));
                         cliente.setCorreoElectronico((String) out.get("p_out_correo"));
-                        cliente.setEsFrecuente((Boolean) out.get("p_out_es_frecuente"));
                         cliente.setIdComuna((Integer) out.get("p_out_id_comuna"));
                         cliente.setNombreUsuario((String) out.get("p_out_nombre_usuario"));
 
