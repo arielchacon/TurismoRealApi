@@ -36,7 +36,7 @@ public class MantenimientoService {
                 .addValue("p_in_estado", registrarMantenimiento.getEstado(), Types.VARCHAR)
                 .addValue("p_in_fecha_mantencion", registrarMantenimiento.getFechaMantencion(), Types.DATE)
                 .addValue("p_in_costo", registrarMantenimiento.getCosto(), Types.INTEGER)
-                .addValue("p_in_depto", registrarMantenimiento.getIdDepartamento(), Types.INTEGER);
+                .addValue("p_in_id_depto", registrarMantenimiento.getIdDepartamento(), Types.INTEGER);
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withoutProcedureColumnMetaDataAccess()
                 .withProcedureName("SP_CREATE_MAINTENANCE")
@@ -44,7 +44,7 @@ public class MantenimientoService {
                         new SqlParameter("p_in_estado", Types.VARCHAR),
                         new SqlParameter("p_in_fecha_mantencion", Types.DATE),
                         new SqlParameter("p_in_costo", Types.INTEGER),
-                        new SqlParameter("p_in_depto", Types.INTEGER));
+                        new SqlParameter("p_in_id_depto", Types.INTEGER));
 
         jdbcCall.execute(in);
 
