@@ -109,4 +109,33 @@ public class EdificioService {
 
         }
 
+        public List<EdificioResponse> listar() {
+
+                List<EdificioResponse> edificios = new ArrayList<>();
+
+                try {
+
+                        String query = "SELECT ID_EDIFICIO, DIRECCION, ESTADO, COMUNAS_ID_COMUNA, NOMBRE FROM EDIFICIOS";
+                        PreparedStatement stm = dataSource.getConnection().prepareStatement(query);
+
+                        ResultSet rs = stm.executeQuery();
+
+                        while (rs.next()) {
+
+                                EdificioResponse edificio = new EdificioResponse(rs.getInt("ID_EDIFICIO"), 
+                                rs.getString("NOMBRE"), rs.getString("DIRECCION"), rs.getInt("COMUNAS_ID_COMUNA"), 
+                                rs.getString("ESTADO"));
+
+                                edificios.add(edificio);
+                        }
+
+                } catch (Exception e) {
+
+                        e.printStackTrace();
+                }
+
+                return edificios;
+
+        }
+
 }

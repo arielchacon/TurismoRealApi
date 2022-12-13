@@ -55,5 +55,12 @@ public class EdificioController {
         return edificioService.listarEdificios(idComuna);
 
     }
+
+    @GetMapping("/listar")
+    public List<EdificioResponse> listar() {
+
+        return edificioService.listar();
+
+    }
     
 }
